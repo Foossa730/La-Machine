@@ -12,7 +12,7 @@ const questions = [
     category: "Origines",
     question: "De quelle ville Jul est-il originaire ?",
     correct: "Marseille",
-    answers: ["Marseille", "Toulon", "Nice", "Lyon"],
+    answers: ["Marseille", "Toulon", "Avignon", "Lyon"],
     note: "Son univers est fortement associé à Marseille.",
   },
   {
