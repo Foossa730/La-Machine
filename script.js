@@ -1,6 +1,5 @@
 const questions = [
   {
-    id: "real-name",
     category: "Identité",
     question: "Quel est le vrai prénom de Jul ?",
     correct: "Julien",
@@ -8,23 +7,19 @@ const questions = [
     note: "Jul est le nom de scène de Julien Mari.",
   },
   {
-    id: "origin-city",
     category: "Origines",
     question: "De quelle ville Jul est-il originaire ?",
     correct: "Marseille",
-    answers: ["Marseille", "Toulon", "Avignon", "Lyon"],
+    answers: ["Marseille", "Toulon", "Nice", "Lyon"],
     note: "Son univers est fortement associé à Marseille.",
   },
   {
-    id: "label-name",
     category: "Label",
     question: "Comment s'appelle le label fondé par Jul ?",
     correct: "D'or et de platine",
-    answers: ["D'or et de platine", "Capitol du Sud", "Planete Rap Music", "La Zone Records"],
-    note: "Le noir et l'or du quiz font référence à ce label.",
+    answers: ["D'or et de platine", "Capitol du Couscous", "Planete Rap Music", "La Zone Records"],
   },
   {
-    id: "first-album",
     category: "Discographie",
     question: "Quel album est considéré comme son premier album studio sorti en 2014 ?",
     correct: "Dans ma paranoïa",
@@ -32,7 +27,6 @@ const questions = [
     note: "Dans ma paranoïa lance officiellement sa grande cadence d'albums.",
   },
   {
-    id: "nickname",
     category: "Surnom",
     question: "Quel surnom est régulièrement associé à Jul ?",
     correct: "L'Ovni",
@@ -40,7 +34,6 @@ const questions = [
     note: "L'Ovni est aussi le titre d'un de ses albums.",
   },
   {
-    id: "tchikita-album",
     category: "Album",
     question: "Quel album de Jul contient le titre populaire 'Tchikita' ?",
     correct: "L'ovni",
@@ -48,7 +41,6 @@ const questions = [
     note: "Tchikita fait partie des titres qui ont beaucoup marqué son public.",
   },
   {
-    id: "my-world-year",
     category: "Carriere",
     question: "En quelle année Jul sort-il 'My World', l'un de ses albums majeurs ?",
     correct: "2015",
@@ -56,20 +48,18 @@ const questions = [
     note: "My World sort après ses premiers projets de 2014.",
   },
   {
-    id: "hand-sign",
     category: "Style",
     question: "Quel geste est souvent associé aux fans de Jul ?",
     correct: "Le signe Jul avec les mains",
     answers: [
       "Le signe Jul avec les mains",
       "Le moonwalk",
-      "Le salut militaire",
-      "La danse du casque",
+      "Le salut c'est seb du glorys",
+      "La danse des bandits",
     ],
     note: "Le signe Jul est devenu un code visuel très reconnaissable.",
   },
   {
-    id: "album-2020",
     category: "Album",
     question: "Lequel de ces projets est bien un album de Jul sorti en 2020 ?",
     correct: "La Machine",
@@ -77,38 +67,35 @@ const questions = [
     note: "La Machine fait partie de sa discographie très dense.",
   },
   {
-    id: "best-song",
     category: "Chanson",
     question: "Quelle est la meilleure chanson de Jul ?",
     correct: "Amnésia",
     answers: ["Amnésia", "Tchikita", "Wesh alors", "J'oublie tout"],
-    note: "Amnésia est la bonne réponse de ce quiz.",
+    note: "Amnésia yc l'animal",
   },
   {
-    id: "release-rhythm",
     category: "Carriere",
     question: "Quel trait caractérise particulièrement le rythme de sortie de Jul ?",
     correct: "Il publie très fréquemment de nouveaux projets",
     answers: [
-      "Il publie très fréquemment de nouveaux projets",
+      "Il publie 24/24 la machine",
       "Il ne sort qu'un album tous les dix ans",
-      "Il refuse les albums studio",
-      "Il ne publie que des reprises rock",
+      "Il refuse les albums avec naza",
+      "Il ne publie que des reprises de johnny",
     ],
     note: "Sa productivité est l'une des marques fortes de sa carrière.",
   },
   {
-    id: "sales-status",
     category: "Reconnaissance",
     question: "Quel record ou statut revient souvent quand on parle de Jul dans le rap français ?",
     correct: "L'un des plus gros vendeurs du rap français",
     answers: [
-      "L'un des plus gros vendeurs du rap français",
+      "Le plus gros vendeurs du rap français",
       "Premier rappeur français à gagner un Oscar",
       "Créateur officiel de l'hymne de la Coupe du monde 1998",
       "Fondateur du festival de Cannes",
     ],
-    note: "Ses ventes et ses streams le placent parmi les artistes les plus massifs du rap français.",
+    note: "Ses ventes et ses streams le placent devant Johnny Hallyday.",
   },
 ];
 
@@ -120,13 +107,6 @@ const state = {
   locked: false,
   started: false,
   soundEnabled: true,
-};
-
-const soundFiles = {
-  start: "audio/intro.mp3",
-  correct: "audio/correct.mp3",
-  wrong: "audio/wrong.mp3",
-  unlock: "audio/unlock.mp3",
 };
 
 const elements = {
@@ -152,18 +132,9 @@ const elements = {
   accessCode: document.querySelector("#access-code"),
   codeNote: document.querySelector("#code-note"),
   unlockBox: document.querySelector("#unlock-box"),
-  confettiLayer: document.querySelector("#confetti-layer"),
 };
 
 let audioContext;
-const customSounds = Object.fromEntries(
-  Object.entries(soundFiles).map(([type, path]) => {
-    const audio = new Audio(path);
-    audio.preload = "auto";
-    audio.dataset.failed = "false";
-    return [type, audio];
-  }),
-);
 
 function setScreen(activeScreen) {
   [elements.startScreen, elements.questionScreen, elements.resultScreen].forEach((screen) => {
@@ -177,11 +148,6 @@ function updateLiveStats() {
   elements.scoreLive.textContent = String(state.score);
   elements.questionLive.textContent = `${questionNumber}/${questions.length}`;
   elements.streakLive.textContent = `x${state.streak}`;
-
-  [elements.scoreLive, elements.questionLive, elements.streakLive].forEach((element) => {
-    element.classList.remove("stat-bump");
-    requestAnimationFrame(() => element.classList.add("stat-bump"));
-  });
 }
 
 function shuffle(items) {
@@ -222,26 +188,6 @@ function playTone(type) {
     oscillator.connect(gain).connect(audioContext.destination);
     oscillator.start(startTime);
     oscillator.stop(startTime + 0.2);
-  });
-}
-
-function playSound(type) {
-  if (!state.soundEnabled) return;
-
-  const source = customSounds[type];
-
-  if (!source || source.dataset.failed === "true") {
-    playTone(type);
-    return;
-  }
-
-  const clip = source.cloneNode();
-  clip.volume = type === "wrong" ? 0.35 : 0.58;
-  clip.currentTime = 0;
-
-  clip.play().catch(() => {
-    source.dataset.failed = "true";
-    playTone(type);
   });
 }
 
@@ -286,8 +232,6 @@ function selectAnswer(button, selectedAnswer) {
       answerButton.classList.add("is-correct");
     } else if (answerButton === button) {
       answerButton.classList.add("is-wrong");
-    } else {
-      answerButton.classList.add("is-muted");
     }
   });
 
@@ -297,14 +241,14 @@ function selectAnswer(button, selectedAnswer) {
     state.score += state.streak > 0 && state.streak % 3 === 0 ? 15 : 10;
     elements.feedback.textContent = `Bonne réponse. ${current.note}`;
     elements.feedback.classList.add("good");
-    playSound("correct");
+    playTone("correct");
   } else {
     state.streak = 0;
     elements.feedback.textContent = `Raté. La bonne réponse était: ${current.correct}. ${current.note}`;
     elements.feedback.classList.add("bad");
     elements.questionScreen.classList.add("shake");
     setTimeout(() => elements.questionScreen.classList.remove("shake"), 380);
-    playSound("wrong");
+    playTone("wrong");
   }
 
   elements.progressBar.style.width = `${((state.index + 1) / questions.length) * 100}%`;
@@ -312,51 +256,35 @@ function selectAnswer(button, selectedAnswer) {
   updateLiveStats();
 }
 
-function launchConfetti() {
-  if (!elements.confettiLayer) return;
-
-  elements.confettiLayer.innerHTML = "";
-
-  Array.from({ length: 70 }).forEach((_, index) => {
-    const piece = document.createElement("span");
-    const color = index % 3 === 0 ? "#f04a25" : index % 3 === 1 ? "#f48023" : "#f8f5ec";
-
-    piece.className = "confetti-piece";
-    piece.style.left = `${Math.random() * 100}%`;
-    piece.style.background = color;
-    piece.style.setProperty("--x-drift", `${Math.random() * 220 - 110}px`);
-    piece.style.setProperty("--spin", `${Math.random() * 720 + 360}deg`);
-    piece.style.setProperty("--fall-duration", `${Math.random() * 1000 + 1500}ms`);
-    piece.style.animationDelay = `${Math.random() * 320}ms`;
-    elements.confettiLayer.appendChild(piece);
-  });
-
-  setTimeout(() => {
-    elements.confettiLayer.innerHTML = "";
-  }, 3200);
-}
-
 function finishQuiz() {
   const highTier = state.correct >= 9;
+  const standardTier = state.correct >= 7;
 
-  elements.resultBadge.textContent = highTier ? "Accès validé" : "Encore un tour";
+  elements.resultBadge.textContent = highTier ? "Golden access" : standardTier ? "Access valide" : "Encore un tour";
   elements.resultTitle.textContent = highTier
-      ? "Tu as mérité ta place à la machine."
-      : "Tu bredouilles la team.";
+      ? "Le code premium est à toi."
+      : standardTier
+        ? "Tu débloques un code standard."
+        : "Pas encore assez chaud.";
 
   if (highTier) {
     elements.resultMessage.textContent =
-      "Télécharge l'application Stade de France et connecte-toi avec les codes suivants !";
-    elements.accessCode.textContent = "soann.poncon@orange.fr";
-    elements.codeNote.textContent = "";
-    playSound("unlock");
-    launchConfetti();
+      "Grosse performance. Tu as gardé le rythme jusqu'au bout et tu peux viser l'accès prioritaire.";
+    elements.accessCode.textContent = "JUL-GOLD-13";
+    elements.codeNote.textContent = "Code démo prêt à connecter à une vraie billetterie.";
+    playTone("unlock");
+  } else if (standardTier) {
+    elements.resultMessage.textContent =
+      "Solide score. Tu connais bien l'univers de Jul et tu repars avec un accès fan.";
+    elements.accessCode.textContent = "JUL-FAN-84";
+    elements.codeNote.textContent = "Code standard de démonstration.";
+    playTone("unlock");
   } else {
     elements.resultMessage.textContent =
-      `Score: ${state.correct}/${questions.length}. Il faut au moins 9 bonnes réponses pour récupérer la place.`;
+      `Score: ${state.correct}/${questions.length}. Rejoue pour atteindre au moins 7 bonnes réponses.`;
     elements.accessCode.textContent = "BLOQUÉ";
-    elements.codeNote.textContent = "Tu peux rejouer pour retenter ta chance.";
-    playSound("wrong");
+    elements.codeNote.textContent = "Objectif: 70 points minimum.";
+    playTone("wrong");
   }
 
   setScreen(elements.resultScreen);
@@ -371,7 +299,7 @@ function startQuiz() {
   state.locked = false;
   state.started = true;
   setScreen(elements.questionScreen);
-  playSound("start");
+  playTone("start");
   renderQuestion();
 }
 
