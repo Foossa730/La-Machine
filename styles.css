@@ -106,18 +106,20 @@ button {
 }
 
 .app-shell {
-  width: min(1180px, calc(100% - 32px));
+  width: min(1360px, calc(100% - 32px));
   min-height: 100vh;
   margin: 0 auto;
-  padding: 32px 0;
+  padding: 24px 0;
   display: grid;
-  grid-template-columns: 0.92fr 1.08fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 24px;
   align-items: center;
 }
 
 .hero-panel,
 .quiz-stage {
+  height: min(760px, calc(100vh - 48px));
+  min-height: 620px;
   border: 1px solid var(--line);
   background: var(--panel);
   box-shadow: var(--shadow);
@@ -126,8 +128,7 @@ button {
 }
 
 .hero-panel {
-  min-height: 620px;
-  padding: 38px;
+  padding: clamp(24px, 3vw, 38px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -143,14 +144,14 @@ button {
   content: "JUL";
   color: rgba(240, 74, 37, 0.08);
   font-family: "Bebas Neue", Impact, sans-serif;
-  font-size: clamp(9rem, 22vw, 16rem);
+  font-size: clamp(8rem, 16vw, 14rem);
   line-height: 0.7;
   animation: ghostTag 5.5s ease-in-out infinite;
   transform: rotate(-8deg);
 }
 
 .hand-sign {
-  width: clamp(84px, 11vw, 132px);
+  width: clamp(74px, 8vw, 116px);
   height: auto;
   margin-bottom: 18px;
   filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.45));
@@ -218,12 +219,12 @@ h2 {
 
 h1 {
   max-width: 7ch;
-  font-size: clamp(4.8rem, 10vw, 8.6rem);
+  font-size: clamp(4.2rem, 8vw, 7.2rem);
   line-height: 0.88;
 }
 
 h2 {
-  font-size: clamp(2.7rem, 5.8vw, 5.1rem);
+  font-size: clamp(2.55rem, 4.9vw, 4.35rem);
   line-height: 0.94;
 }
 
@@ -236,8 +237,8 @@ h2 {
 
 .intro {
   max-width: 34rem;
-  margin: 22px 0 0;
-  font-size: 1.05rem;
+  margin: 18px 0 0;
+  font-size: 1rem;
 }
 
 .live-card {
@@ -249,7 +250,7 @@ h2 {
 }
 
 .live-card div {
-  padding: 18px;
+  padding: 14px;
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.045);
   transition:
@@ -286,8 +287,7 @@ h2 {
 }
 
 .quiz-stage {
-  min-height: 620px;
-  padding: clamp(24px, 4vw, 42px);
+  padding: clamp(22px, 3vw, 38px);
   display: grid;
   align-items: center;
   position: relative;
@@ -333,6 +333,7 @@ h2 {
 .result-screen {
   display: none;
   animation: riseIn 420ms ease both;
+  width: 100%;
 }
 
 .is-active {
@@ -352,11 +353,11 @@ h2 {
 
 .start-screen p {
   max-width: 48rem;
-  margin: 20px 0;
+  margin: 16px 0;
 }
 
 .home-visual {
-  margin: 24px 0 26px;
+  margin: 18px 0 20px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 112px;
   gap: 14px;
@@ -373,8 +374,8 @@ h2 {
 }
 
 .home-photo {
-  min-height: 190px;
-  max-height: 245px;
+  min-height: 150px;
+  max-height: 190px;
   object-position: center;
   filter: saturate(1.08) contrast(1.08);
   transition:
@@ -389,7 +390,7 @@ h2 {
 
 .label-mark {
   height: 100%;
-  min-height: 190px;
+  min-height: 150px;
   padding: 10px;
   background: #ffffff;
   object-fit: contain;
@@ -404,12 +405,12 @@ h2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
-  margin: 26px 0 32px;
+  margin: 18px 0 24px;
 }
 
 .rules-grid span {
-  min-height: 74px;
-  padding: 14px;
+  min-height: 62px;
+  padding: 12px;
   display: flex;
   align-items: center;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -490,7 +491,7 @@ h2 {
 
 .progress-track {
   height: 12px;
-  margin: 16px 0 34px;
+  margin: 14px 0 24px;
   background: rgba(255, 255, 255, 0.08);
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -505,19 +506,20 @@ h2 {
 }
 
 #question-text {
-  min-height: 144px;
-  margin-bottom: 26px;
+  min-height: 104px;
+  margin-bottom: 20px;
 }
 
 .answers {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
 
 .answer-btn {
   width: 100%;
-  min-height: 64px;
-  padding: 16px 18px;
+  min-height: 74px;
+  padding: 14px 16px;
   display: grid;
   grid-template-columns: 36px 1fr;
   gap: 14px;
@@ -585,8 +587,8 @@ h2 {
 }
 
 .feedback {
-  min-height: 54px;
-  margin: 18px 0 0;
+  min-height: 48px;
+  margin: 14px 0 0;
   color: var(--muted);
   font-weight: 800;
   transform-origin: left center;
@@ -613,8 +615,8 @@ h2 {
 }
 
 .unlock-box {
-  margin: 28px 0;
-  padding: 24px;
+  margin: 20px 0;
+  padding: 20px;
   border: 1px solid rgba(240, 74, 37, 0.42);
   background: linear-gradient(135deg, rgba(240, 74, 37, 0.14), rgba(255, 255, 255, 0.04));
   position: relative;
@@ -631,8 +633,8 @@ h2 {
 }
 
 .result-photo {
-  height: clamp(150px, 26vw, 230px);
-  margin: 0 0 20px;
+  height: clamp(132px, 17vw, 190px);
+  margin: 0 0 16px;
   object-position: center;
   filter: saturate(1.12) contrast(1.1);
   animation: resultPhotoPop 620ms ease both;
@@ -931,6 +933,7 @@ h2 {
 
   .hero-panel,
   .quiz-stage {
+    height: auto;
     min-height: auto;
   }
 
@@ -944,6 +947,10 @@ h2 {
 
   #question-text {
     min-height: 0;
+  }
+
+  .answers {
+    grid-template-columns: 1fr;
   }
 }
 
