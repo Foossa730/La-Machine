@@ -261,7 +261,7 @@ function finishQuiz() {
 
   elements.resultBadge.textContent = highTier ? "Accès validé" : "Encore un tour";
   elements.resultTitle.textContent = highTier
-      ? "Tu as mérité ta place à la machine."
+      ? "Tu as mérité ta place finalement"
       : "Tu bredouilles la team.";
 
   if (highTier) {
