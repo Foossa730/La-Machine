@@ -76,7 +76,7 @@ Ajoute aussi ces variables Netlify, scope `Functions` :
 
 ```text
 RESEND_API_KEY=re_xxxxxxxxx
-RESEND_FROM_EMAIL=Jul Access Quiz <ton-adresse@ton-domaine.fr>
+RESEND_FROM_EMAIL=onboarding@resend.dev
 RESEND_REPLY_TO=ton-email@example.com
 ```
 
@@ -85,7 +85,8 @@ Pour Resend :
 1. Crée un compte sur Resend.
 2. Crée une clé API.
 3. Vérifie ton domaine d'envoi si tu veux utiliser une adresse personnalisée.
-4. En attendant, tu peux tester avec l'adresse fournie par Resend si ton compte l'autorise.
+4. En test, utilise `onboarding@resend.dev` comme expéditeur, comme dans l'exemple Resend.
+5. Pour la production, remplace ensuite `RESEND_FROM_EMAIL` par une adresse de ton domaine vérifié.
 
 Envoie ensuite un lien unique par personne :
 

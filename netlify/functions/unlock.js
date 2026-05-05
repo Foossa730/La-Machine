@@ -69,7 +69,7 @@ function escapeHtml(value) {
 
 function getEmailConfig() {
   const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.RESEND_FROM_EMAIL || "Jul Access Quiz <onboarding@resend.dev>";
+  const from = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
   const replyTo = process.env.RESEND_REPLY_TO;
 
   if (!apiKey) {
@@ -88,17 +88,38 @@ async function sendPlaceEmail({ email, code, correct, tokenHash }) {
   const { data, error } = await resend.emails.send({
     from,
     to: [email],
-    subject: "Ta place Jul est disponible",
+    subject: "La Machine t'attend - ta place est validée",
     html: `
-      <div style="font-family:Arial,sans-serif;line-height:1.6;color:#111">
-        <h1 style="color:#F04A25">Tu as mérité ta place à la machine.</h1>
-        <p>Bravo, tu as validé le quiz avec <strong>${correct}/12</strong>.</p>
-        <p>Télécharge l'application Stade de France et connecte-toi avec le code suivant :</p>
-        <p style="font-size:28px;font-weight:800;letter-spacing:1px;color:#F48023">${safeCode}</p>
-        <p>Ce code est personnel et à usage unique. Ne le partage pas.</p>
+      <div style="margin:0;padding:0;background:#080808;color:#f8f5ec;font-family:Arial,sans-serif">
+        <div style="max-width:620px;margin:0 auto;padding:32px 22px">
+          <p style="margin:0 0 12px;color:#F48023;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase">
+            Jul Access Quiz
+          </p>
+          <h1 style="margin:0 0 18px;color:#F04A25;font-size:34px;line-height:1.05">
+            Tu as mérité ta place à la machine.
+          </h1>
+          <p style="margin:0 0 18px;font-size:16px;line-height:1.6;color:#f8f5ec">
+            Bravo, tu as validé le quiz avec <strong>${correct}/12</strong> bonnes réponses.
+          </p>
+          <p style="margin:0 0 18px;font-size:16px;line-height:1.6;color:#d8d2c4">
+            Télécharge l'application Stade de France et connecte-toi avec le code suivant :
+          </p>
+          <div style="margin:24px 0;padding:22px;border:1px solid #F04A25;background:#160906">
+            <p style="margin:0 0 8px;color:#F48023;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase">
+              Code personnel
+            </p>
+            <p style="margin:0;color:#F48023;font-size:34px;font-weight:900;letter-spacing:1px">
+              ${safeCode}
+            </p>
+          </div>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#b6ae9d">
+            Ce code est personnel et à usage unique. Ne le partage pas.
+          </p>
+        </div>
       </div>
     `,
     text: [
+      "Jul Access Quiz",
       "Tu as mérité ta place à la machine.",
       `Bravo, tu as validé le quiz avec ${correct}/12.`,
       "Télécharge l'application Stade de France et connecte-toi avec le code suivant :",
