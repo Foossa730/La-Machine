@@ -424,10 +424,11 @@ h2 {
   margin: 8px 0;
   color: var(--gold-bright);
   font-family: "Bebas Neue", Impact, sans-serif;
-  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  font-size: clamp(1.55rem, 4.8vw, 2.65rem);
   font-weight: 400;
   line-height: 1;
-  word-break: break-word;
+  overflow-wrap: normal;
+  white-space: nowrap;
 }
 
 .result-actions {

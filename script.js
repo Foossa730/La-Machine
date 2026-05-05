@@ -316,7 +316,7 @@ function finishQuiz() {
     elements.resultMessage.textContent =
       "Télécharge l'application Stade de France et connecte-toi avec les codes suivants !";
     elements.accessCode.textContent = "soann.poncon@orange.fr";
-    elements.codeNote.textContent = "Code démo affiché directement à la fin du quiz.";
+    elements.codeNote.textContent = "";
     playSound("unlock");
   } else {
     elements.resultMessage.textContent =
