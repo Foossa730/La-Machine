@@ -152,6 +152,7 @@ const elements = {
   accessCode: document.querySelector("#access-code"),
   codeNote: document.querySelector("#code-note"),
   unlockBox: document.querySelector("#unlock-box"),
+  confettiLayer: document.querySelector("#confetti-layer"),
 };
 
 let audioContext;
@@ -176,6 +177,11 @@ function updateLiveStats() {
   elements.scoreLive.textContent = String(state.score);
   elements.questionLive.textContent = `${questionNumber}/${questions.length}`;
   elements.streakLive.textContent = `x${state.streak}`;
+
+  [elements.scoreLive, elements.questionLive, elements.streakLive].forEach((element) => {
+    element.classList.remove("stat-bump");
+    requestAnimationFrame(() => element.classList.add("stat-bump"));
+  });
 }
 
 function shuffle(items) {
@@ -280,6 +286,8 @@ function selectAnswer(button, selectedAnswer) {
       answerButton.classList.add("is-correct");
     } else if (answerButton === button) {
       answerButton.classList.add("is-wrong");
+    } else {
+      answerButton.classList.add("is-muted");
     }
   });
 
@@ -304,6 +312,30 @@ function selectAnswer(button, selectedAnswer) {
   updateLiveStats();
 }
 
+function launchConfetti() {
+  if (!elements.confettiLayer) return;
+
+  elements.confettiLayer.innerHTML = "";
+
+  Array.from({ length: 70 }).forEach((_, index) => {
+    const piece = document.createElement("span");
+    const color = index % 3 === 0 ? "#f04a25" : index % 3 === 1 ? "#f48023" : "#f8f5ec";
+
+    piece.className = "confetti-piece";
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.background = color;
+    piece.style.setProperty("--x-drift", `${Math.random() * 220 - 110}px`);
+    piece.style.setProperty("--spin", `${Math.random() * 720 + 360}deg`);
+    piece.style.setProperty("--fall-duration", `${Math.random() * 1000 + 1500}ms`);
+    piece.style.animationDelay = `${Math.random() * 320}ms`;
+    elements.confettiLayer.appendChild(piece);
+  });
+
+  setTimeout(() => {
+    elements.confettiLayer.innerHTML = "";
+  }, 3200);
+}
+
 function finishQuiz() {
   const highTier = state.correct >= 9;
 
@@ -318,6 +350,7 @@ function finishQuiz() {
     elements.accessCode.textContent = "soann.poncon@orange.fr";
     elements.codeNote.textContent = "";
     playSound("unlock");
+    launchConfetti();
   } else {
     elements.resultMessage.textContent =
       `Score: ${state.correct}/${questions.length}. Il faut au moins 9 bonnes réponses pour récupérer la place.`;

@@ -11,6 +11,7 @@
   --success: #5dffb3;
   --line: rgba(240, 74, 37, 0.26);
   --shadow: 0 22px 70px rgba(0, 0, 0, 0.42);
+  --shadow-hot: 0 18px 44px rgba(240, 74, 37, 0.26);
 }
 
 * {
@@ -40,6 +41,61 @@ body::before {
     linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 42px 42px;
   mask-image: linear-gradient(to bottom, black, transparent 85%);
+  animation: gridDrift 18s linear infinite;
+}
+
+body::after {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  content: "";
+  background:
+    linear-gradient(115deg, transparent 0 45%, rgba(240, 74, 37, 0.08) 48%, transparent 52%),
+    linear-gradient(245deg, transparent 0 52%, rgba(244, 128, 35, 0.08) 55%, transparent 59%);
+  background-size: 180% 180%;
+  animation: lightSweep 9s ease-in-out infinite alternate;
+}
+
+.crowd-lights {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.crowd-lights span {
+  position: absolute;
+  bottom: -28px;
+  width: 7px;
+  height: 120px;
+  border-radius: 999px;
+  background: linear-gradient(to top, rgba(244, 128, 35, 0.58), transparent);
+  opacity: 0.38;
+  transform-origin: bottom;
+  animation: lightWave 5s ease-in-out infinite;
+}
+
+.crowd-lights span:nth-child(1) {
+  left: 9%;
+  animation-delay: -1s;
+}
+
+.crowd-lights span:nth-child(2) {
+  left: 31%;
+  height: 155px;
+  animation-delay: -2.4s;
+}
+
+.crowd-lights span:nth-child(3) {
+  right: 24%;
+  height: 135px;
+  animation-delay: -0.6s;
+}
+
+.crowd-lights span:nth-child(4) {
+  right: 8%;
+  animation-delay: -3.2s;
 }
 
 button {
@@ -66,6 +122,7 @@ button {
   background: var(--panel);
   box-shadow: var(--shadow);
   backdrop-filter: blur(18px);
+  transform-style: preserve-3d;
 }
 
 .hero-panel {
@@ -76,6 +133,7 @@ button {
   justify-content: space-between;
   position: relative;
   overflow: hidden;
+  animation: panelPop 620ms ease both;
 }
 
 .hero-panel::after {
@@ -87,6 +145,7 @@ button {
   font-family: "Bebas Neue", Impact, sans-serif;
   font-size: clamp(9rem, 22vw, 16rem);
   line-height: 0.7;
+  animation: ghostTag 5.5s ease-in-out infinite;
   transform: rotate(-8deg);
 }
 
@@ -95,6 +154,41 @@ button {
   height: auto;
   margin-bottom: 18px;
   filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.45));
+  animation: floatSign 3.6s ease-in-out infinite;
+}
+
+.ticket-stack {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  z-index: 2;
+  display: grid;
+  gap: 8px;
+  transform: rotate(8deg);
+}
+
+.ticket-stack span {
+  width: 68px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px dashed rgba(8, 8, 8, 0.62);
+  color: var(--black);
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-size: 1.4rem;
+  box-shadow: var(--shadow-hot);
+  animation: ticketBounce 2.7s ease-in-out infinite;
+}
+
+.ticket-stack span:nth-child(2) {
+  transform: translateX(-12px) rotate(-8deg);
+  animation-delay: -0.8s;
+}
+
+.ticket-stack span:nth-child(3) {
+  transform: translateX(8px) rotate(5deg);
+  animation-delay: -1.6s;
 }
 
 .eyebrow,
@@ -158,6 +252,16 @@ h2 {
   padding: 18px;
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.045);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.live-card div:hover {
+  border-color: rgba(244, 128, 35, 0.54);
+  background: rgba(240, 74, 37, 0.09);
+  transform: translateY(-3px);
 }
 
 .metric-label {
@@ -177,11 +281,51 @@ h2 {
   line-height: 1;
 }
 
+.live-card strong.stat-bump {
+  animation: statBump 260ms ease;
+}
+
 .quiz-stage {
   min-height: 620px;
   padding: clamp(24px, 4vw, 42px);
   display: grid;
   align-items: center;
+  position: relative;
+  overflow: hidden;
+  animation: panelPop 620ms 100ms ease both;
+}
+
+.stage-sparks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.stage-sparks span {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 1px solid rgba(244, 128, 35, 0.58);
+  transform: rotate(45deg);
+  animation: sparkDrift 6s linear infinite;
+}
+
+.stage-sparks span:nth-child(1) {
+  left: 12%;
+  top: 18%;
+}
+
+.stage-sparks span:nth-child(2) {
+  right: 15%;
+  top: 34%;
+  animation-delay: -2s;
+}
+
+.stage-sparks span:nth-child(3) {
+  left: 58%;
+  bottom: 16%;
+  animation-delay: -4s;
 }
 
 .start-screen,
@@ -203,6 +347,7 @@ h2 {
   background: linear-gradient(135deg, var(--gold-bright), var(--amber));
   font-size: 0.76rem;
   font-weight: 900;
+  animation: badgePulse 2.2s ease-in-out infinite;
 }
 
 .start-screen p {
@@ -231,6 +376,15 @@ h2 {
   min-height: 190px;
   max-height: 245px;
   object-position: center;
+  filter: saturate(1.08) contrast(1.08);
+  transition:
+    transform 420ms ease,
+    filter 420ms ease;
+}
+
+.home-photo:hover {
+  filter: saturate(1.22) contrast(1.16);
+  transform: scale(1.025);
 }
 
 .label-mark {
@@ -239,6 +393,11 @@ h2 {
   padding: 10px;
   background: #ffffff;
   object-fit: contain;
+  transition: transform 420ms ease;
+}
+
+.label-mark:hover {
+  transform: rotate(2deg) scale(1.03);
 }
 
 .rules-grid {
@@ -258,6 +417,17 @@ h2 {
   background: rgba(255, 255, 255, 0.045);
   font-size: 0.9rem;
   font-weight: 700;
+  position: relative;
+  overflow: hidden;
+}
+
+.rules-grid span::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(244, 128, 35, 0.16), transparent);
+  transform: translateX(-120%);
+  animation: ruleShine 3.8s ease-in-out infinite;
 }
 
 .primary-btn,
@@ -272,12 +442,25 @@ h2 {
     transform 180ms ease,
     filter 180ms ease,
     background 180ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.primary-btn::after,
+.ghost-btn::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.36), transparent);
+  transform: translateX(-130%);
+  transition: transform 420ms ease;
 }
 
 .primary-btn {
   color: var(--black);
   background: linear-gradient(135deg, var(--gold-bright), var(--gold) 48%, var(--amber));
   box-shadow: 0 12px 28px rgba(240, 74, 37, 0.24);
+  animation: callToAction 2.3s ease-in-out infinite;
 }
 
 .ghost-btn {
@@ -291,6 +474,11 @@ h2 {
   filter: brightness(1.06);
 }
 
+.primary-btn:hover::after,
+.ghost-btn:hover::after {
+  transform: translateX(130%);
+}
+
 .question-topline {
   display: flex;
   justify-content: space-between;
@@ -301,10 +489,11 @@ h2 {
 }
 
 .progress-track {
-  height: 8px;
+  height: 12px;
   margin: 16px 0 34px;
   background: rgba(255, 255, 255, 0.08);
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 #progress-bar {
@@ -312,6 +501,7 @@ h2 {
   height: 100%;
   background: linear-gradient(90deg, var(--gold), var(--gold-bright));
   transition: width 300ms ease;
+  box-shadow: 0 0 24px rgba(244, 128, 35, 0.45);
 }
 
 #question-text {
@@ -340,12 +530,27 @@ h2 {
   transition:
     border-color 180ms ease,
     background 180ms ease,
+    box-shadow 180ms ease,
     transform 180ms ease;
+  animation: answerIn 420ms ease both;
+}
+
+.answer-btn:nth-child(2) {
+  animation-delay: 45ms;
+}
+
+.answer-btn:nth-child(3) {
+  animation-delay: 90ms;
+}
+
+.answer-btn:nth-child(4) {
+  animation-delay: 135ms;
 }
 
 .answer-btn:hover:not(:disabled) {
   border-color: rgba(240, 74, 37, 0.64);
   background: rgba(240, 74, 37, 0.12);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.24);
   transform: translateX(4px);
 }
 
@@ -366,7 +571,7 @@ h2 {
 .answer-btn.is-correct {
   border-color: rgba(93, 255, 179, 0.8);
   background: rgba(93, 255, 179, 0.12);
-  animation: pulseRight 480ms ease;
+  animation: pulseRight 520ms ease;
 }
 
 .answer-btn.is-wrong {
@@ -374,19 +579,27 @@ h2 {
   background: rgba(255, 93, 93, 0.11);
 }
 
+.answer-btn.is-muted {
+  opacity: 0.58;
+  transform: scale(0.985);
+}
+
 .feedback {
   min-height: 54px;
   margin: 18px 0 0;
   color: var(--muted);
   font-weight: 800;
+  transform-origin: left center;
 }
 
 .feedback.good {
   color: var(--success);
+  animation: feedbackPop 340ms ease;
 }
 
 .feedback.bad {
   color: var(--danger);
+  animation: feedbackPop 340ms ease;
 }
 
 .next-btn {
@@ -396,6 +609,7 @@ h2 {
 
 .next-btn.is-visible {
   display: inline-flex;
+  animation: nextSlide 260ms ease both;
 }
 
 .unlock-box {
@@ -403,12 +617,25 @@ h2 {
   padding: 24px;
   border: 1px solid rgba(240, 74, 37, 0.42);
   background: linear-gradient(135deg, rgba(240, 74, 37, 0.14), rgba(255, 255, 255, 0.04));
+  position: relative;
+  overflow: hidden;
+}
+
+.unlock-box::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(120deg, transparent 20%, rgba(244, 128, 35, 0.18), transparent 80%);
+  transform: translateX(-110%);
+  animation: unlockSweep 2.7s ease-in-out infinite;
 }
 
 .result-photo {
   height: clamp(150px, 26vw, 230px);
   margin: 0 0 20px;
   object-position: center;
+  filter: saturate(1.12) contrast(1.1);
+  animation: resultPhotoPop 620ms ease both;
 }
 
 .unlock-box span,
@@ -420,6 +647,8 @@ h2 {
 }
 
 .unlock-box strong {
+  position: relative;
+  z-index: 1;
   display: block;
   margin: 8px 0;
   color: var(--gold-bright);
@@ -429,6 +658,24 @@ h2 {
   line-height: 1;
   overflow-wrap: normal;
   white-space: nowrap;
+}
+
+.confetti-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -18px;
+  width: 10px;
+  height: 16px;
+  background: var(--gold);
+  opacity: 0.95;
+  animation: confettiFall var(--fall-duration, 1800ms) ease-out forwards;
 }
 
 .result-actions {
@@ -444,11 +691,11 @@ h2 {
 @keyframes riseIn {
   from {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(22px) scale(0.985);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -458,7 +705,17 @@ h2 {
     transform: scale(1);
   }
   45% {
-    transform: scale(1.018);
+    transform: scale(1.025);
+  }
+}
+
+@keyframes statBump {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.12);
   }
 }
 
@@ -475,10 +732,201 @@ h2 {
   }
 }
 
+@keyframes gridDrift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 42px 42px;
+  }
+}
+
+@keyframes lightSweep {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes lightWave {
+  0%,
+  100% {
+    transform: rotate(-8deg) scaleY(0.82);
+  }
+  50% {
+    transform: rotate(9deg) scaleY(1.08);
+  }
+}
+
+@keyframes panelPop {
+  from {
+    opacity: 0;
+    transform: translateY(18px) rotateX(3deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+  }
+}
+
+@keyframes ghostTag {
+  0%,
+  100% {
+    transform: rotate(-8deg) translateY(0);
+  }
+  50% {
+    transform: rotate(-6deg) translateY(-10px);
+  }
+}
+
+@keyframes floatSign {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+}
+
+@keyframes ticketBounce {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -7px;
+  }
+}
+
+@keyframes sparkDrift {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) rotate(45deg) scale(0.7);
+  }
+  20%,
+  70% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-70px) rotate(225deg) scale(1.15);
+  }
+}
+
+@keyframes badgePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgba(240, 74, 37, 0);
+  }
+  50% {
+    box-shadow: 0 0 26px rgba(240, 74, 37, 0.28);
+  }
+}
+
+@keyframes ruleShine {
+  0%,
+  30% {
+    transform: translateX(-120%);
+  }
+  70%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes callToAction {
+  0%,
+  100% {
+    box-shadow: 0 12px 28px rgba(240, 74, 37, 0.24);
+  }
+  50% {
+    box-shadow: 0 18px 42px rgba(240, 74, 37, 0.42);
+  }
+}
+
+@keyframes answerIn {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes feedbackPop {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes nextSlide {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes unlockSweep {
+  0%,
+  35% {
+    transform: translateX(-110%);
+  }
+  75%,
+  100% {
+    transform: translateX(110%);
+  }
+}
+
+@keyframes resultPhotoPop {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes confettiFall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0) rotate(0deg);
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--x-drift, 0), 105vh, 0) rotate(var(--spin, 480deg));
+  }
+}
+
 @media (max-width: 900px) {
   .app-shell {
     grid-template-columns: 1fr;
     align-items: start;
+  }
+
+  .ticket-stack {
+    top: 18px;
+    right: 18px;
+    transform: scale(0.86) rotate(8deg);
+    transform-origin: top right;
   }
 
   .hero-panel,
@@ -547,6 +995,10 @@ h2 {
   .primary-btn,
   .ghost-btn {
     width: 100%;
+  }
+
+  .unlock-box strong {
+    font-size: clamp(1.18rem, 5.5vw, 1.7rem);
   }
 }
 

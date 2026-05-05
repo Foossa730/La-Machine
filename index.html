@@ -17,8 +17,19 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div class="crowd-lights" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
     <main class="app-shell">
       <section class="hero-panel" aria-labelledby="quiz-title">
+        <div class="ticket-stack" aria-hidden="true">
+          <span>VIP</span>
+          <span>JUL</span>
+          <span>13</span>
+        </div>
         <div class="hero-copy">
           <img
             class="hand-sign"
@@ -50,6 +61,11 @@
       </section>
 
       <section class="quiz-stage" aria-live="polite">
+        <div class="stage-sparks" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
         <div class="start-screen is-active" id="start-screen">
           <div class="badge">Acces fan zone</div>
           <h2>Montre que tu connais vraiment le J.</h2>
@@ -123,6 +139,7 @@
         </div>
       </section>
     </main>
+    <div class="confetti-layer" id="confetti-layer" aria-hidden="true"></div>
 
     <script src="script.js"></script>
   </body>
