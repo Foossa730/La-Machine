@@ -76,7 +76,7 @@ const questions = [
   {
     category: "Carriere",
     question: "Quel trait caractérise particulièrement le rythme de sortie de Jul ?",
-    correct: "Il publie très fréquemment de nouveaux projets",
+    correct: "Il publie 24/24 la machine",
     answers: [
       "Il publie 24/24 la machine",
       "Il ne sort qu'un album tous les dix ans",
