@@ -1,0 +1,12 @@
+{
+  "name": "jul-access-quiz",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "check": "node --check script.js && node --check netlify/functions/unlock.js"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^9.1.2",
+    "resend": "^6.3.0"
+  }
+}

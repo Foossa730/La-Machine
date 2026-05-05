@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jul Access Quiz</title>
+    <meta
+      name="description"
+      content="Quiz interactif sur Jul pour débloquer un code d'accès concert exclusif."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero-panel" aria-labelledby="quiz-title">
+        <div class="hero-copy">
+          <img
+            class="hand-sign"
+            src="assets/images/signe_j.png"
+            alt="Signe Jul"
+          />
+          <p class="eyebrow">D'or et de platine challenge</p>
+          <h1 id="quiz-title">Jul Access Quiz</h1>
+          <p class="intro">
+            Réponds aux questions, garde le rythme et tente de débloquer ton
+            code d'accès exclusif pour les places du prochain concert.
+          </p>
+        </div>
+
+        <div class="live-card" aria-label="Progression du quiz">
+          <div>
+            <span class="metric-label">Score</span>
+            <strong id="score-live">0</strong>
+          </div>
+          <div>
+            <span class="metric-label">Question</span>
+            <strong id="question-live">0/12</strong>
+          </div>
+          <div>
+            <span class="metric-label">Serie</span>
+            <strong id="streak-live">x0</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="quiz-stage" aria-live="polite">
+        <div class="start-screen is-active" id="start-screen">
+          <div class="badge">Acces fan zone</div>
+          <h2>Montre que tu connais vraiment le J.</h2>
+          <p>
+            12 questions, 4 choix par manche. À partir de 9 bonnes réponses,
+            tu repars avec tes places. À 7 ou 8, tu bredouilles la team.
+          </p>
+          <div class="home-visual" aria-label="Visuels Jul">
+            <img
+              class="home-photo"
+              src="assets/images/pp_home.jpeg"
+              alt="Portrait de Jul"
+            />
+            <img
+              class="label-mark"
+              src="assets/images/dp.jpg"
+              alt="Logo D'or et de platine"
+            />
+          </div>
+          <div class="rules-grid" aria-label="Regles du quiz">
+            <span>+10 points par bonne réponse</span>
+            <span>Bonus série des 3 bonnes réponses</span>
+          </div>
+          <button class="primary-btn" id="start-btn" type="button">
+            Lancer le quiz
+          </button>
+        </div>
+
+        <div class="question-screen" id="question-screen">
+          <div class="question-topline">
+            <span id="category-label">Carriere</span>
+            <span id="progress-label">Question 1 sur 12</span>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div id="progress-bar"></div>
+          </div>
+
+          <h2 id="question-text">Question</h2>
+          <div class="answers" id="answers"></div>
+
+          <div class="feedback" id="feedback" role="status"></div>
+          <button class="primary-btn next-btn" id="next-btn" type="button">
+            Continuer
+          </button>
+        </div>
+
+        <div class="result-screen" id="result-screen">
+          <div class="badge" id="result-badge">Resultat</div>
+          <img
+            class="result-photo"
+            src="assets/images/jul_ballon.jpeg"
+            alt="Jul avec un ballon"
+          />
+          <h2 id="result-title">Fin du quiz</h2>
+          <p id="result-message"></p>
+
+          <div class="unlock-box" id="unlock-box">
+            <span>Statut</span>
+            <strong id="access-code">---</strong>
+            <small id="code-note"></small>
+          </div>
+
+          <div class="result-actions">
+            <button class="primary-btn" id="replay-btn" type="button">
+              Rejouer
+            </button>
+            <button class="ghost-btn" id="sound-toggle" type="button">
+              Son: activé
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
