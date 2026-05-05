@@ -116,14 +116,11 @@ const state = {
   index: 0,
   score: 0,
   correct: 0,
-  answers: [],
   streak: 0,
   locked: false,
   started: false,
   soundEnabled: true,
 };
-
-const accessToken = new URLSearchParams(window.location.search).get("token")?.trim() || "";
 
 const soundFiles = {
   start: "audio/intro.mp3",
@@ -302,88 +299,41 @@ function selectAnswer(button, selectedAnswer) {
     playSound("wrong");
   }
 
-  state.answers.push({
-    questionId: current.id,
-    selected: selectedAnswer,
-  });
-
   elements.progressBar.style.width = `${((state.index + 1) / questions.length) * 100}%`;
   elements.nextBtn.classList.add("is-visible");
   updateLiveStats();
 }
 
-async function requestUnlock() {
-  const response = await fetch("/.netlify/functions/unlock", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      token: accessToken,
-      answers: state.answers,
-    }),
-  });
-
-  const payload = await response.json().catch(() => ({}));
-
-  if (!response.ok) {
-    throw new Error(payload.message || "Impossible de vérifier ton accès pour le moment.");
-  }
-
-  return payload;
-}
-
-async function finishQuiz() {
+function finishQuiz() {
   const highTier = state.correct >= 9;
 
-  elements.resultBadge.textContent = highTier ? "Vérification" : "Encore un tour";
+  elements.resultBadge.textContent = highTier ? "Accès validé" : "Encore un tour";
   elements.resultTitle.textContent = highTier
       ? "Tu as mérité ta place à la machine."
       : "Tu bredouilles la team.";
 
   if (highTier) {
     elements.resultMessage.textContent =
-      "Vérification sécurisée de ton lien en cours...";
-    elements.accessCode.textContent = "...";
-    elements.codeNote.textContent = "Ne ferme pas la page.";
-
-    setScreen(elements.resultScreen);
-    updateLiveStats();
-
-    try {
-      const result = await requestUnlock();
-      elements.resultBadge.textContent = "Accès validé";
-      elements.resultMessage.textContent =
-        `Ta place vient d'être envoyée par email à ${result.email}. Vérifie aussi tes spams.`;
-      elements.accessCode.textContent = "EMAIL ENVOYÉ";
-      elements.codeNote.textContent = "Le code n'est pas affiché ici pour protéger ta place.";
-      playSound("unlock");
-    } catch (error) {
-      elements.resultBadge.textContent = "Accès bloqué";
-      elements.resultTitle.textContent = "Vérification impossible.";
-      elements.resultMessage.textContent = error.message;
-      elements.accessCode.textContent = "BLOQUÉ";
-      elements.codeNote.textContent =
-        "Vérifie que tu utilises le lien personnel reçu pour récupérer ta place.";
-      playSound("wrong");
-    }
+      "Télécharge l'application Stade de France et connecte-toi avec les codes suivants !";
+    elements.accessCode.textContent = "SDF-JUL-PLACE-001";
+    elements.codeNote.textContent = "Code démo affiché directement à la fin du quiz.";
+    playSound("unlock");
   } else {
     elements.resultMessage.textContent =
       `Score: ${state.correct}/${questions.length}. Il faut au moins 9 bonnes réponses pour récupérer la place.`;
     elements.accessCode.textContent = "BLOQUÉ";
     elements.codeNote.textContent = "Tu peux rejouer pour retenter ta chance.";
     playSound("wrong");
-
-    setScreen(elements.resultScreen);
-    updateLiveStats();
   }
+
+  setScreen(elements.resultScreen);
+  updateLiveStats();
 }
 
 function startQuiz() {
   state.index = 0;
   state.score = 0;
   state.correct = 0;
-  state.answers = [];
   state.streak = 0;
   state.locked = false;
   state.started = true;
