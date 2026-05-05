@@ -315,7 +315,7 @@ function finishQuiz() {
   if (highTier) {
     elements.resultMessage.textContent =
       "Télécharge l'application Stade de France et connecte-toi avec les codes suivants !";
-    elements.accessCode.textContent = "SDF-JUL-PLACE-001";
+    elements.accessCode.textContent = "soann.poncon@orange.fr";
     elements.codeNote.textContent = "Code démo affiché directement à la fin du quiz.";
     playSound("unlock");
   } else {
