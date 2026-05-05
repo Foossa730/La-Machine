@@ -88,7 +88,7 @@ const questions = [
   {
     category: "Reconnaissance",
     question: "Quel record ou statut revient souvent quand on parle de Jul dans le rap français ?",
-    correct: "L'un des plus gros vendeurs du rap français",
+    correct: "Le plus gros vendeurs du rap français",
     answers: [
       "Le plus gros vendeurs du rap français",
       "Premier rappeur français à gagner un Oscar",
