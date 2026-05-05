@@ -258,32 +258,23 @@ function selectAnswer(button, selectedAnswer) {
 
 function finishQuiz() {
   const highTier = state.correct >= 9;
-  const standardTier = state.correct >= 7;
 
-  elements.resultBadge.textContent = highTier ? "Golden access" : standardTier ? "Access valide" : "Encore un tour";
+  elements.resultBadge.textContent = highTier ? "Accès validé" : "Encore un tour";
   elements.resultTitle.textContent = highTier
-      ? "Le code premium est à toi."
-      : standardTier
-        ? "Tu débloques un code standard."
-        : "Pas encore assez chaud.";
+      ? "Tu as mérité ta place à la machine."
+      : "Tu bredouilles la team.";
 
   if (highTier) {
     elements.resultMessage.textContent =
-      "Grosse performance. Tu as gardé le rythme jusqu'au bout et tu peux viser l'accès prioritaire.";
-    elements.accessCode.textContent = "JUL-GOLD-13";
-    elements.codeNote.textContent = "Code démo prêt à connecter à une vraie billetterie.";
-    playTone("unlock");
-  } else if (standardTier) {
-    elements.resultMessage.textContent =
-      "Solide score. Tu connais bien l'univers de Jul et tu repars avec un accès fan.";
-    elements.accessCode.textContent = "JUL-FAN-84";
-    elements.codeNote.textContent = "Code standard de démonstration.";
+      "Télécharge l'application Stade de France et connecte-toi avec les codes suivants !";
+    elements.accessCode.textContent = "soann.poncon@orange.fr";
+    elements.codeNote.textContent = "";
     playTone("unlock");
   } else {
     elements.resultMessage.textContent =
-      `Score: ${state.correct}/${questions.length}. Rejoue pour atteindre au moins 7 bonnes réponses.`;
+      `Score: ${state.correct}/${questions.length}. Il faut au moins 9 bonnes réponses pour récupérer la place.`;
     elements.accessCode.textContent = "BLOQUÉ";
-    elements.codeNote.textContent = "Objectif: 70 points minimum.";
+    elements.codeNote.textContent = "Tu peux rejouer pour retenter ta chance.";
     playTone("wrong");
   }
 
